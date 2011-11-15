@@ -5,7 +5,8 @@ The plugin defines the following options:
 
   selection: {
     mode: null or "x" or "y" or "xy",
-    color: color
+    color: color,
+    minSize: float
   }
 
 Selection support is enabled by setting the mode to one of "x", "y" or
@@ -13,7 +14,8 @@ Selection support is enabled by setting the mode to one of "x", "y" or
 similarly for "y" mode. For "xy", the selection becomes a rectangle
 where both ranges can be specified. "color" is color of the selection
 (if you need to change the color later on, you can get to it with
-plot.getOptions().selection.color).
+plot.getOptions().selection.color). "minSize" is the minimum extent of the
+selection, selections smaller than it will be ignored.
 
 When selection support is enabled, a "plotselected" event will be
 emitted on the DOM element you passed into the plot function. The
@@ -274,7 +276,7 @@ The plugin allso adds the following methods to the plot object:
         }
 
         function selectionIsSane() {
-            var minSize = 0.1;
+			var minSize = plot.getOptions().selection.minSize;
             return Math.abs(selection.second.x - selection.first.x) >= minSize &&
                 Math.abs(selection.second.y - selection.first.y) >= minSize;
         }
@@ -335,7 +337,8 @@ The plugin allso adds the following methods to the plot object:
         options: {
             selection: {
                 mode: null, // one of null, "x", "y" or "xy"
-                color: "#e8cfac"
+                color: "#e8cfac",
+				minSize: 5
             }
         },
         name: 'selection',
